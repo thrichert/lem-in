@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 15:28:24 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/10 17:08:35 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/11 01:54:21 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int close_lemin(t_env *e, char opt)
 	}
 	else if (opt == ERROR_CLOSE)
 	{
-		return (ft_error_d(2, "s", "lem-in exit after an error occur\n"));
+		ft_error_d(2, "s", "lem-in exit after an error occur\n");
+		exit(0);
 	}
 	return (FAIL);
 }

@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 17:17:45 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/10 23:04:29 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/11 01:53:33 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ char check_solvability(t_env *e, t_room *cur, int from_id)
 	t_room *r;
 
 	cur->stats |= R_IS_FREE;
+	e->way = ft_lst_push_front_r(e->way, ft_lstnew_nm(cur, sizeof(t_room*)));
 	if (!cur)
 		return (ft_error_c(2, "s", "cur = null..."));
-	if (cur->id == 0)
+	if (cur->id == 1)
 		return (SUCCESS);
 	else
 	{
@@ -32,16 +33,12 @@ char check_solvability(t_env *e, t_room *cur, int from_id)
 		{
 			r = (t_room*)tmp->data;
 			ft_printf("CHECKIN new room is : %s\n", r->name);
-			if (r->id == 0)
-				return (SUCCESS);
-			else if (r->stats & R_IS_FREE)
+			if (r->id == 1)
 			{
-				tmp = tmp->next;
-				if (!tmp)
-					return (ft_error_c (2, "s", "dead end"));
-				continue ;
+				e->way = ft_lst_push_front_r(e->way, ft_lstnew_nm(r, sizeof(t_room*)));
+				return (SUCCESS);
 			}
-			else if (!check_solvability(e, r, cur->id))
+			else if (r->stats & R_IS_FREE || !check_solvability(e, r, cur->id))
 			{
 				tmp = tmp->next;
 				continue ;
@@ -306,7 +303,12 @@ char	get_line(t_env *e)
 
 	i = 0;
 	if (!e->lines)
-		return (ft_error_c(2, "RFLs", FFL, "ERROR!\n\tNo input provided\n"));
+	{
+		ft_error_v(2, "RFLs", FFL, "ERROR!\n\tNo input provided\n");
+		close_lemin(e, ERROR_CLOSE);
+	}
+	if (e->lines  == '\0')
+		return (FAIL);
 	while (e->lines[e->id + i])
 	{
 		if (e->lines[e->id + i] == '\n')
@@ -317,7 +319,11 @@ char	get_line(t_env *e)
 		}
 		++i;
 	}
-	return (FAIL);
+	e->cline = ft_strndup(e->lines + e->id, i);
+	e->id += i;
+	if (ft_strcmp(e->cline, "\n") == 0 || ft_strcmp(e->cline, "\0") == 0)
+		return (FAIL);
+	return (SUCCESS);
 }
 
 char	ft_gnl(t_env *e)
@@ -371,7 +377,7 @@ int main(void)
 	if (e.status & GET_TUBS)
 	{
 		e.status &= ~GET_TUBS;
-		if (!check_solvability(&e, give_me_room_with_id(&e, 1), 1))
+		if (!check_solvability(&e, give_me_room_with_id(&e, 0), 0))
 		{
 			ft_error_v(2, "s", "ERROR!\n\tNo path between Start <-> End found!\n");
 			return (close_lemin(&e, ERROR_CLOSE));
@@ -396,6 +402,13 @@ int main(void)
 				ft_printf("\tlinkto : %s\n", t2->name);
 			tmp2 = tmp2->next;
 		}
+		tmp = tmp->next;
+	}
+	tmp = e.way;
+	while (tmp)
+	{
+		t = (t_room*)(tmp->data);
+		ft_printf("ROOM : %s\n", t->name);
 		tmp = tmp->next;
 	}
 

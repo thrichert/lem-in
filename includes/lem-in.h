@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/10 20:00:44 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/11 00:42:28 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_env
 	int		n_ants;
 	int 	n_r;
 	int		n_l;
+	t_lst	*way;
 	t_lst 	*room;
 }				t_env;
 
