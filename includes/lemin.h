@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 13:49:59 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:12:09 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define R_IS_OCPY		0b10
 # define R_IS_START		0b100
 # define R_IS_END		0b1000
+# define R_IS_VAL		0b10000
 
 # define HAS_ANTS		0b1
 # define HAS_START		0b10
@@ -60,6 +61,7 @@ typedef struct		s_room
 	char			*name;
 	char			stats;
 	int				id;
+	int				idf;
 	t_pos			pos;
 	t_lst			*neighbours;
 }					t_room;
@@ -79,7 +81,7 @@ typedef struct		s_env
 	char			*cline;
 	int				id;
 	char			stat_line;
-	char			status;
+	int				status;
 	int				n_ants;
 	int				ants_at_s;
 	int				ants_at_e;
@@ -88,7 +90,7 @@ typedef struct		s_env
 	int				n_r;
 	t_way			*ways;
 	int				n_w;
-
+	int				tot_steps;
 }					t_env;
 
 int					close_lemin(t_env *e, char opt);

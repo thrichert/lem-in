@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 17:17:45 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 14:20:18 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:21:10 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char check_solvability(t_env *e, t_room *cur)
 		{
 
 			r = (t_room*)tmp->data;
-			if (r->id == 1)
+			if (r->id == END_ID)
 			{
 				(e->ways)->r = ft_lst_push_front_r((e->ways)->r, ft_lstnew_nm(r, sizeof(t_room*)));
 				e->ways->v = SUCCESS;
@@ -64,7 +64,7 @@ char check_solvability(t_env *e, t_room *cur)
 				ft_bzero(e->ways, sizeof(t_way));
 				(e->ways)->next = tmp_w;
 				e->ways->l = 1;
-				e->ways->r = ft_lst_push_front_r((e->ways)->r, ft_lstnew_nm(give_me_room_with_id(e, 0), sizeof(t_room*)));
+				e->ways->r = ft_lst_push_front_r((e->ways)->r, ft_lstnew_nm(give_me_room_with_id(e, START_ID), sizeof(t_room*)));
 				return (SUCCESS);
 			}
 			else if (r->stats & R_IS_FREE || !check_solvability(e, r))
@@ -301,6 +301,13 @@ char check_line(t_env *e)
 void test(void)
 {
 	t_env e;
+	t_way *w;
+
+
+	t_room *t;
+	// t_room *t2;
+	t_lst *tmp;
+	// t_lst *tmp2;
 
 	ft_bzero(&e, sizeof(t_env));
 	e.n_r = 2;
@@ -325,67 +332,125 @@ void test(void)
 		e.status &= ~GET_TUBS;
 		e.ways = (t_way*)ft_memalloc(sizeof(t_way));
 		e.ways->next = NULL;
-		if (!check_solvability(&e, give_me_room_with_id(&e, 0)))
+		if (!check_solvability(&e, give_me_room_with_id(&e, START_ID)))
 		{
+
 			ft_error_v(2, "s", "ERROR!\n\tNo path between Start <-> End found!\n");
 			close_lemin(&e, ERROR_CLOSE);
 		}
 		e.status |= SOLVING;
+
 	}
 
-
-
-	/////////
-
-	t_room *t;
-	t_room *t2;
-	t_lst *tmp;
-	t_lst *tmp2;
-	tmp = e.room;
-	while (tmp)
+	if (e.status & SOLVING)
 	{
-		t = (t_room*)(tmp->data);
-		ft_printf(" ROOM : %s id : %d [%d , %d] : %d\n", (char*)t->name, t->id, t->pos.x, t->pos.y, t->stats);
-		tmp2 = t->neighbours;
-		while (tmp2)
+		w = give_me_shorter_way(&e);
+		tmp = w->r;
+		e.ants_at_s = e.n_ants;
+		ft_printf("TOT ants : %d\n", e.n_ants);
+		t_room *prev;
+		while (e.ants_at_e < e.n_ants)
 		{
-			t2 = (t_room*)tmp2->data;
-				ft_printf("\tlinkto : %s\n", t2->name);
-			tmp2 = tmp2->next;
-		}
-		tmp = tmp->next;
-	}
-
-	t_way *w;
-	w = e.ways;
-	tmp = w->r;
-	tmp = tmp->next;
-
-
-	int i;
-	// t_way *w;
-	w = e.ways;
-	i = 0;
-	while (w)
-	{
-		if (w->v)
-		{
-			ft_printf("----- route : %d as l : %d\n", i, w->l);
-			tmp = (t_lst*)w->r;
-
+			++(e.tot_steps);
+			tmp = w->r;
 			while (tmp)
 			{
-				if (tmp->data)
+				t = (t_room*)tmp->data;
+				if (t->id == START_ID && e.ants_at_s > 0)
 				{
-					t = (t_room*)tmp->data;
-					 ft_printf("ROOM : %s\n", t->name);
+					// ft_printf("ants left : %d\n", e.ants_at_s);
+					if (prev->id == END_ID)
+					{
+						--(e.ants_at_s);
+						++(e.ants_at_e);
+						prev->idf = e.n_ants - e.ants_at_s;
+						ft_printf("L%d-%s ", prev->idf, prev->name);
+						// ft_printf("> ants reach end !<\n");
+						// ft_printf("> %d <\n", e.ants_at_e);
+					}
+					else if (prev->stats & R_IS_FREE)
+					{
+						--(e.ants_at_s);
+						prev->idf = e.n_ants - e.ants_at_s;
+						ft_printf("L%d-%s ", prev->idf, prev->name);
+						prev->stats |= R_IS_OCPY;
+						prev->stats &= ~R_IS_FREE;
+					}
+					break;
 				}
+				else if (t->stats & R_IS_OCPY)
+				{
+					if(prev->id == END_ID)
+					{
+						ft_printf("L%d-%s ", t->idf, prev->name);
+						// ft_printf("> ants reach end !<\n");
+						t->stats &= ~R_IS_OCPY;
+						t->stats |= R_IS_FREE;
+						++(e.ants_at_e);
+						// ft_printf("> %d <\n", e.ants_at_e);
+					}
+					else if (prev->stats & R_IS_FREE)
+					{
+						ft_printf("L%d-%s ", prev->idf, prev->name);
+						prev->stats |= R_IS_OCPY;
+						prev->stats &= ~R_IS_FREE;
+						t->stats &= ~R_IS_OCPY;
+						t->stats |= R_IS_FREE;
+					}
+				}
+				prev = t;
 				tmp = tmp->next;
+
 			}
+			ft_printf("\n");
 		}
-		++i;
-		w = w->next;
+		ft_printf("problem solved in > %d < steps\n", e.tot_steps);
+
+
 	}
+	/////////
+
+	// tmp = e.room;
+	// while (tmp)
+	// {
+	// 	t = (t_room*)(tmp->data);
+	// 	ft_printf(" ROOM : %s id : %d [%d , %d] : %d\n", (char*)t->name, t->id, t->pos.x, t->pos.y, t->stats);
+	// 	tmp2 = t->neighbours;
+	// 	while (tmp2)
+	// 	{
+	// 		t2 = (t_room*)tmp2->data;
+	// 			ft_printf("\tlinkto : %s\n", t2->name);
+	// 		tmp2 = tmp2->next;
+	// 	}
+	// 	tmp = tmp->next;
+	// }
+
+
+
+	// int i;
+	// // t_way *w;
+	// w = e.ways;
+	// i = 0;
+	// while (w)
+	// {
+	// 	if (w->v)
+	// 	{
+	// 		ft_printf("----- route : %d as l : %d\n", i, w->l);
+	// 		tmp = (t_lst*)w->r;
+
+	// 		while (tmp)
+	// 		{
+	// 			if (tmp->data)
+	// 			{
+	// 				t = (t_room*)tmp->data;
+	// 				 ft_printf("ROOM : %s id: %d\n", t->name, t->id);
+	// 			}
+	// 			tmp = tmp->next;
+	// 		}
+	// 	}
+	// 	++i;
+	// 	w = w->next;
+	// }
 
 	// w = give_me_shorter_way(&e);
 	// while (e.ants_at_e != e.n_ants)
@@ -401,8 +466,6 @@ int main(void)
 {
 
 	test();
-	while (1);
-
 
 	return (0);
 }

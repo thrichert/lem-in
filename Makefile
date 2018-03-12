@@ -6,7 +6,7 @@
 #    By: trichert <trichert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/08 16:56:13 by trichert          #+#    #+#              #
-#    Updated: 2018/03/12 12:09:45 by trichert         ###   ########.fr        #
+#    Updated: 2018/03/12 15:43:54 by trichert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,11 @@ DIR_H_LIBFT = ./libft/includes
 LIBFT_A = ./libft/libftprintf.a
 
 SRO = $(SRC:.c=.o)
+SRD = $(SRC:.c=.d)
+
 INC = $(addprefix $(DIR_INC), $(INCS))
 
-FLAG = -Wall -Wextra -Werror -g
+FLAG = -Wall -Wextra -Werror -g -MMD
 
 all : $(NAME)
 
@@ -65,3 +67,5 @@ fcleanlib:
 re : fclean all
 
 ree : fclean fcleanlib re
+
+-include $(SRO:.o=.d)
