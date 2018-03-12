@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 11:29:19 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 20:53:16 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 23:58:44 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,25 @@ static char	basic_check(t_env *e)
 
 static char	get_line(t_env *e)
 {
-	int i;
-
-	i = 0;
+	e->lline = 0;
 	if (!basic_check(e))
 		return (FAIL);
-	while (e->lines[e->id + i])
+	while (e->lines[e->id + e->lline])
 	{
-		if (e->lines[e->id + i] == '\n')
+		if (e->lines[e->id + e->lline] == '\n')
 		{
 			if (e->cline)
 				free(e->cline);
-			e->cline = ft_strndup(e->lines + e->id, i);
-			e->id += i + 1;
+			e->cline = ft_strndup(e->lines + e->id, e->lline);
+			e->id += e->lline + 1;
 			return (SUCCESS);
 		}
-		++i;
+		++(e->lline);
 	}
 	if (e->cline)
 		free(e->cline);
-	e->cline = ft_strndup(e->lines + e->id, i);
-	e->id += i;
+	e->cline = ft_strndup(e->lines + e->id, e->lline);
+	e->id += e->lline;
 	if (ft_strcmp(e->cline, "\n") == 0 || ft_strcmp(e->cline, "\0") == 0)
 		return (FAIL);
 	return (SUCCESS);

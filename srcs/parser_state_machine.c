@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 18:34:19 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 20:54:21 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/13 00:01:24 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,11 @@ static char	check_line_is_cmd(t_env *e)
 		e->stat_line = L_IS_WRONG;
 		return (ft_error_c(2, "s", "ERROR!\n\tNo ants provided\n"));
 	}
-	else if (ft_strcmp(e->cline, "##start") == 0 && !(e->status & HAS_START))
-	{
+	else if (e->cline[2] == 's' && !(e->status & HAS_START))
 		e->stat_line = L_IS_BASE_S;
-		return (SUCCESS);
-	}
-	else if (ft_strcmp(e->cline, "##end") == 0 && !(e->status & HAS_END))
-	{
+	else if (e->cline[2] == 'e' && !(e->status & HAS_END))
 		e->stat_line = L_IS_BASE_E;
-		return (SUCCESS);
-	}
-	else
-	{
-		e->status |= ERROR;
-		e->stat_line = L_IS_WRONG;
-		return (ft_error_c(2, "s", "ERROR!\n\tIllegal command\n"));
-	}
+	return (SUCCESS);
 }
 
 static char	buff_overflw_checkin(char *s)
@@ -110,24 +99,21 @@ char		check_line(t_env *e)
 		return (ft_error_c(2, "s", "ERROR!\n\tNo line provided!\n"));
 	if (e->cline[0] == '#' && e->cline[1] != '#')
 		return (SUCCESS);
+	else if ((ft_strncmp(e->cline, "##start", e->lline) == 0 ||
+				ft_strncmp(e->cline, "##end", e->lline) == 0))
+		return (check_line_is_cmd(e));
+	else if (ft_strncmp(e->cline, "##", 1) == 0)
+		return (SUCCESS);
 	else if (e->status & GET_CMD)
 		return (check_line_get_cmd(e));
-	else if (e->cline[0] == '#' && e->cline[1] == '#')
-		return (check_line_is_cmd(e));
 	else if (!(e->status & HAS_ANTS))
 		check_line_get_ants(e);
 	else if (e->status & GET_ROOMS)
 	{
 		if (!get_room(e, R_IS_ROOM))
-		{
-			e->status |= ERROR;
 			return (FAIL);
-		}
 	}
 	else if (e->status & GET_TUBS && !get_tubs(e))
-	{
-		e->status |= ERROR;
 		return (FAIL);
-	}
 	return (SUCCESS);
 }

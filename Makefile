@@ -6,7 +6,7 @@
 #    By: trichert <trichert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/08 16:56:13 by trichert          #+#    #+#              #
-#    Updated: 2018/03/12 20:57:48 by trichert         ###   ########.fr        #
+#    Updated: 2018/03/13 00:11:56 by trichert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ lib:
 
 %.o: %.c
 	@gcc -o $@ -c $< -I $(DIR_H_LIBFT) -I $(DIR_INC) $(FLAG)
-
+	@echo "\033[32m\033[1m[OK]\033[0m " $(notdir $<)
 clean:
 	@rm -f $(SRO) $(SRD)
 	@echo "\033[1m\033[31msuppression lem-in *.o / *.d\033[0m"

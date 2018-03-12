@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 20:39:35 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/13 00:07:13 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct		s_env
 	char			buf[BUF + 1];
 	char			*lines;
 	char			*cline;
+	int				lline;
 	int				id;
 	char			stat_line;
 	int				status;
