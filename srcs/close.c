@@ -6,11 +6,11 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 15:28:24 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 00:54:32 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 12:14:55 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 int close_lemin(t_env *e, char opt)
 {
