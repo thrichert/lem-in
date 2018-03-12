@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/11 00:42:28 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/11 16:21:52 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ typedef struct	s_room
 	t_lst 	*neighbours;
 }				t_room;
 
+typedef struct	s_way
+{
+	int		l;
+	int 	v;
+	t_lst	*r;
+	struct s_way	*next;
+}				t_way;
+
 typedef struct	s_env
 {
 	char	buf[BUF + 1];
@@ -70,8 +78,10 @@ typedef struct	s_env
 	int		n_ants;
 	int 	n_r;
 	int		n_l;
-	t_lst	*way;
+	t_way	*ways;
+	int		n_w;
 	t_lst 	*room;
 }				t_env;
 
-int close_lemin(t_env *e, char opt);
+int		close_lemin(t_env *e, char opt);
+char	gnl(t_env *e);

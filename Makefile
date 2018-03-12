@@ -6,7 +6,7 @@
 #    By: trichert <trichert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/08 16:56:13 by trichert          #+#    #+#              #
-#    Updated: 2018/03/09 19:12:05 by trichert         ###   ########.fr        #
+#    Updated: 2018/03/11 17:19:28 by trichert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,9 @@ NAME = lem-in
 DIR_SRCS = srcs/
 DIR_INC = includes/
 
-SRCS = main.c \
-		close.c
+SRCS =	main.c \
+		close.c \
+		parser.c
 SRC = $(addprefix $(DIR_SRCS), $(SRCS))
 
 INCS = lem-in.h
@@ -32,7 +33,7 @@ LIBFT_A = ./libft/libftprintf.a
 SRO = $(SRC:.c=.o)
 INC = $(addprefix $(DIR_INC), $(INCS))
 
-FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror -g
 
 all : $(NAME)
 
