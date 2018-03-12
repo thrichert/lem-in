@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 17:12:09 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 20:39:35 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define GET_CMD		0b10000
 # define GET_ROOMS		0b100000
 # define ROOMS_OK		0b1000000
+
 # define GET_TUBS		0b10000000
 # define TUBS_OK		0b100000000
 # define SOLVING		0b1000000000
@@ -94,10 +95,15 @@ typedef struct		s_env
 }					t_env;
 
 int					close_lemin(t_env *e, char opt);
+char				check_line(t_env *e);
+char				check_solvability(t_env *e, t_room *cur);
+void				free_tab(char **tab);
 char				gnl(t_env *e);
 char				get_room(t_env *e, int stats);
 char				get_tubs(t_env *e);
 t_room				*give_me_room_with_id(t_env *e, int i);
 t_room				*give_me_room_with_name(t_env *e, char *name);
+t_way				*give_me_shorter_way(t_env *e);
+void				render_way(t_env *e, t_way *w);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: trichert <trichert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/08 16:56:13 by trichert          #+#    #+#              #
-#    Updated: 2018/03/12 15:43:54 by trichert         ###   ########.fr        #
+#    Updated: 2018/03/12 20:57:48 by trichert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,15 @@ NAME = lem-in
 DIR_SRCS = srcs/
 DIR_INC = includes/
 
-SRCS =	main.c		\
-		close.c		\
-		parser.c	\
-		room.c
+SRCS =	algo.c					\
+		close.c					\
+		main.c					\
+		parser_state_machine.c	\
+		parser_stdin.c			\
+		printer.c				\
+		room.c					\
+		tubs.c					\
+		util.c
 
 SRC = $(addprefix $(DIR_SRCS), $(SRCS))
 
@@ -37,7 +42,7 @@ SRD = $(SRC:.c=.d)
 
 INC = $(addprefix $(DIR_INC), $(INCS))
 
-FLAG = -Wall -Wextra -Werror -g -MMD
+FLAG = -Wall -Wextra -Werror -MMD
 
 all : $(NAME)
 
@@ -51,8 +56,8 @@ lib:
 	@gcc -o $@ -c $< -I $(DIR_H_LIBFT) -I $(DIR_INC) $(FLAG)
 
 clean:
-	@rm -f $(SRO)
-	@echo "\033[1m\033[31msuppression lem-in *.o\033[0m"
+	@rm -f $(SRO) $(SRD)
+	@echo "\033[1m\033[31msuppression lem-in *.o / *.d\033[0m"
 
 cleanlib:
 	@make clean -C $(DIR_LIBFT)

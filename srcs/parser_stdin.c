@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_stdin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 11:29:19 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 12:52:14 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/12 20:53:16 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-static char	get_line(t_env *e)
+static char	basic_check(t_env *e)
 {
-	int i;
-
-	i = 0;
 	if (!e->lines)
 	{
 		e->status |= ERROR;
 		ft_error_v(2, "RFLs", FFL, "ERROR!\n\tNo input provided\n");
 		close_lemin(e, ERROR_CLOSE);
 	}
-	if (e->lines  == '\0')
-	{
-		e->status |= ERROR;
+	if (e->lines == '\0')
 		return (FAIL);
-	}
+	return (SUCCESS);
+}
+
+static char	get_line(t_env *e)
+{
+	int i;
+
+	i = 0;
+	if (!basic_check(e))
+		return (FAIL);
 	while (e->lines[e->id + i])
 	{
 		if (e->lines[e->id + i] == '\n')
@@ -45,17 +49,14 @@ static char	get_line(t_env *e)
 	e->cline = ft_strndup(e->lines + e->id, i);
 	e->id += i;
 	if (ft_strcmp(e->cline, "\n") == 0 || ft_strcmp(e->cline, "\0") == 0)
-	{
-		e->status |= ERROR;
 		return (FAIL);
-	}
 	return (SUCCESS);
 }
 
-char	gnl(t_env *e)
+char		gnl(t_env *e)
 {
-	int ret;
-	char *tmp;
+	int		ret;
+	char	*tmp;
 
 	if (e->cline)
 	{
