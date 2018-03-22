@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 16:55:42 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/13 00:07:13 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/22 18:47:43 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ char				get_tubs(t_env *e);
 t_room				*give_me_room_with_id(t_env *e, int i);
 t_room				*give_me_room_with_name(t_env *e, char *name);
 t_way				*give_me_shorter_way(t_env *e);
-void				render_way(t_env *e, t_way *w);
+void				render_way(t_env *e);
 
 #endif

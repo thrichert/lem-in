@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 19:04:43 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 20:12:28 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/22 16:06:23 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ t_way	*give_me_shorter_way(t_env *e)
 	w = e->ways;
 	while (w)
 	{
-		if (w->v && w->l < min)
+		if ((w->v == SUCCESS) && (w->l < min))
 			min = w->l;
 		w = w->next;
 	}
 	w = e->ways;
 	while (w)
 	{
-		if (w->v && w->l == min)
+		if ((w->v == SUCCESS) && w->l == min)
 			return (w);
 		w = w->next;
 	}

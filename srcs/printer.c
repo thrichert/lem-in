@@ -6,7 +6,7 @@
 /*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:28:25 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/12 20:53:42 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/22 19:34:46 by trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ static void	print_otherwise(t_env *e, t_room *prev, t_room *t)
 	}
 }
 
-void		render_way(t_env *e, t_way *w)
+void		render_way(t_env *e)
 {
 	t_room	*t;
 	t_lst	*tmp;
 	t_room	*prev;
 
-	tmp = w->r;
+	tmp = e->ways->r;
 	e->ants_at_s = e->n_ants;
 	while (e->ants_at_e < e->n_ants)
 	{
 		++(e->tot_steps);
-		tmp = w->r;
+		tmp = e->ways->r;
 		while (tmp)
 		{
 			t = (t_room*)tmp->data;
