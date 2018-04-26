@@ -3,74 +3,119 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: trichert <trichert@student.42.fr>          +#+  +:+       +#+         #
+#    By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/03/08 16:56:13 by trichert          #+#    #+#              #
-#    Updated: 2018/03/13 00:11:56 by trichert         ###   ########.fr        #
+#    Created: 2018/03/14 18:35:24 by apopinea          #+#    #+#              #
+#    Updated: 2018/04/26 19:20:28 by apopinea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: clean, fclean, re, $(NAME)
+.PHONY: lib $(NAME) all clean fclean clean2 fclean2 cleanlib fcleanlib re relib re2
 
 .SUFFIXES:
 
-NAME = lem-in
+NAME = "lem-in"
 
-DIR_SRCS = srcs/
-DIR_INC = includes/
+DIR_S =	srcs/
+DIR_I = includes/
 
-SRCS =	algo.c					\
-		close.c					\
-		main.c					\
-		parser_state_machine.c	\
-		parser_stdin.c			\
-		printer.c				\
-		room.c					\
-		tubs.c					\
-		util.c
+####### MAIN #######
+INC_MAIN	=	lem-in.h
 
-SRC = $(addprefix $(DIR_SRCS), $(SRCS))
+SRC_MAIN	=	id_next_str.c 				\
+				int_dup_plus.c				\
+				lem_already_here.c			\
+				lem_calcul_size.c			\
+				lem_calcul_way.c			\
+				lem_clear_room.c			\
+				lem_close.c 				\
+				lem_get_cmd.c				\
+				lem_get_nb_fourmis.c		\
+				lem_get_normal_room.c		\
+				lem_get_rooms.c 			\
+				lem_get_tubes.c				\
+				lem_init.c 					\
+				lem_launch_ants.c			\
+				lem_move_ant.c				\
+				lem_pre_calcul_way.c		\
+				lem_pre_launch_ants.c		\
+				lem_print_rooms.c			\
+				lem_recoup_way.c			\
+				lem_recoup_way2.c			\
+				lem_save_rooms.c 			\
+				lem_save_tubes.c			\
+				lem_save_way_add.c			\
+				lem_save_way_sort.c			\
+				lem_save_way.c				\
+				lem_search_room_name.c		\
+				lem_search_way.c			\
+				lem_search_way2.c			\
+				lem_sup_way.c				\
+				lem_trash_line.c 			\
+				lem_trash_line2.c 			\
+				lem_verif_room_name.c		\
+				lem_way_calc_next_noeud.c	\
+				lem_way_find.c				\
+				main.c						\
+				trash_save.c
 
-INCS = lemin.h
+SRCS = $(addprefix $(DIR_S), $(SRC_MAIN))
+
+SRO = $(SRCS:.c=.o)
+SRD = $(SRCS:.c=.d)
 
 DIR_LIBFT = ./libft/
 DIR_H_LIBFT = ./libft/includes
 LIBFT_A = ./libft/libftprintf.a
 
-SRO = $(SRC:.c=.o)
-SRD = $(SRC:.c=.d)
+DOT_H = $(addprefix $(DIR_I), $(INC_MAIN))
 
-INC = $(addprefix $(DIR_INC), $(INCS))
+OPT = -I
 
-FLAG = -Wall -Wextra -Werror -MMD
+INCLUDES_FINAL = $(addprefix $(OPT), $(DIR_I))
+
+
+FLAG = -Wall -Werror -Wextra -MMD
+
+
+#LDFLAGS = -framework SDL2
+#LDFLAGS = -F /Library/Frameworks -framework SDL2
+
+#CFLAGS = -I /Library/Frameworks/SDL2.framework/Headers
 
 all : $(NAME)
 
 $(NAME): lib $(SRO)
-	@gcc -o $@ $(SRO) $(LIBFT_A) $(FLAG)
+	@gcc -o $@ $(SRO) $(LIBFT_A) $(LDFLAGS) $(FLAG)
+	@echo "\033[1m\033[32mSuccess : \033[0m compilation \033[33m\033[1m$(NAME)\033[0m\n"
+
+%.o: %.c
+	@gcc -o $@ -c $< $(OPT)$(DIR_H_LIBFT) $(INCLUDES_FINAL) $(CFLAGS) $(FLAG)
+	@echo "\033[32m\033[1m[OK]\033[0m " $(notdir $<)
 
 lib:
 	@make -C $(DIR_LIBFT)
 
-%.o: %.c
-	@gcc -o $@ -c $< -I $(DIR_H_LIBFT) -I $(DIR_INC) $(FLAG)
-	@echo "\033[32m\033[1m[OK]\033[0m " $(notdir $<)
 clean:
 	@rm -f $(SRO) $(SRD)
-	@echo "\033[1m\033[31msuppression lem-in *.o / *.d\033[0m"
+	@echo "\033[1m\033[31msuppression $(NAME) *.o\033[0m"
 
 cleanlib:
 	@make clean -C $(DIR_LIBFT)
 
+clean2: clean cleanlib
+
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "\033[1m\033[31msuppression lem-in exe\033[0m"
+	@rm -f $(NAME)
+	@echo "\033[1m\033[31msuppression $(NAME)\033[0m"
 
 fcleanlib:
 	@make fclean -C $(DIR_LIBFT)
 
-re : fclean all
+fclean2: fclean fcleanlib
 
-ree : fclean fcleanlib re
+re: fclean all
 
--include $(SRO:.o=.d)
+relib: fcleanlib lib
+
+re2: fclean2 all

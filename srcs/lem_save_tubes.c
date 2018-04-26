@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_save_tubes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:55:05 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 18:55:21 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+void	lem_save_tubes(t_lem_env *e, int a, int b)
 {
-	va_list		ap;
+	int	i;
 
-	if (fd > 0 && s)
+	i = 0;
+	while (i < e->rooms[a].n_next)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		if (e->rooms[a].id_next[i] == b)
+			return ;
+		++i;
 	}
+	i = sizeof(int) * e->rooms[a].n_next;
+	e->rooms[a].id_next = ft_rememalloc2(e->rooms[a].id_next, i,
+		i + sizeof(int));
+	e->rooms[a].id_next[e->rooms[a].n_next] = b;
+	++(e->rooms[a].n_next);
 }

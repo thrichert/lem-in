@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:05:46 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/09 11:35:28 by trichert         ###   ########.fr       */
+/*   Updated: 2017/12/05 16:19:32 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../common_inc/error_str.h"
 # include "../common_inc/libft_com.h"
-# include "../common_inc_p/p_common_inc.h"
-
 # include "../modules/char/includes/lchar.h"
 # include "../modules/ft_printf/includes/ft_printf.h"
 # include "../modules/ft_prtl/includes/ft_prtl.h"
@@ -29,4 +27,5 @@
 # include "../modules/string/includes/str.h"
 # include "../modules/sys_files/includes/sys_files.h"
 # include "../modules/utilities/includes/lutil.h"
+
 #endif

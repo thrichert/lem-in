@@ -6,7 +6,7 @@
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 14:15:22 by trichert          #+#    #+#             */
-/*   Updated: 2018/03/05 14:23:59 by apopinea         ###   ########.fr       */
+/*   Updated: 2018/04/25 12:40:02 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,33 @@ int		ft_strsplit_buf(char *s, char c)
 			s[i] = '\0';
 		}
 		++i;
+	}
+	return (ss);
+}
+
+int		ft_strsplit_buf2(char *s, char c)
+{
+	int	ss;
+	int i;
+	int	j;
+
+	ss = ft_strsplit_buf(s, c);
+	i = 0;
+	j = 0;
+	while(i < ss)
+	{
+		if (s[j] == '\0')
+		{
+			--ss;
+			++j;
+		}
+		else
+		{
+			while (s[j])
+				++j;
+			++j;
+			++i;
+		}
 	}
 	return (ss);
 }

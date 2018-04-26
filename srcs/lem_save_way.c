@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_save_way.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:37:09 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 19:16:47 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+void	lem_save_way(t_lem_env *e, t_way *way)
 {
-	va_list		ap;
+	int 	k;
+	t_way	*tmp_way;
 
-	if (fd > 0 && s)
+	k = lem_recoup_way(e, way);
+	if (k >= 0)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		tmp_way = e->ways[k];
+		e->ways[k] = way;
+		way = tmp_way;
+		lem_sup_way(way);
+		return ;
 	}
+	if (k == -1)
+	{
+		if (e->n_ways < e->n_util_way)
+			return (lem_save_way_add(e, way));
+		else
+			lem_save_way_sort(e, way);
+	}
+	lem_sup_way(way);
 }

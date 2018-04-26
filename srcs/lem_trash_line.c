@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_trash_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 19:05:25 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 19:05:50 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+char	*lem_trash_line(char **buf)
 {
-	va_list		ap;
+	char	*s;
+	int		i;
 
-	if (fd > 0 && s)
+	while(gnll(0, &s))
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		if (!s)
+			return (NULL);
+		trash_save(buf, s);
+		lem_trash_line2(&s, &i);
+		if (s[i] == '#')
+		{
+			if (s[i + 1] == '#')
+				return (s);
+			else
+				free(s);
+		}
+		else if (s[i] == '\0')
+			break ;
+		else
+			return (s);
 	}
+	if (s)
+		free(s);
+	return (NULL);
 }

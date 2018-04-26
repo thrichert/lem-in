@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   int_dup_plus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:49:01 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 18:49:18 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+int		*int_dup_plus(int *s, int l, int n)
 {
-	va_list		ap;
+	int	i;
+	int	*d;
 
-	if (fd > 0 && s)
+	if(!(d = (int*)malloc(n * sizeof(int))))
+		return (NULL);
+	i = 0;
+	while (i < l)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		d[i] = s[i];
+		++i;
 	}
+	while (i < n)
+	{
+		d[i] = 0;
+		++i;
+	}
+	return (d);
 }

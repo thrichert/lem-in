@@ -1,24 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lem_recoup_way.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 09:46:05 by apopinea          #+#    #+#             */
-/*   Updated: 2018/04/26 19:18:28 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:43:43 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 19:16:29 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "lemin.h"
 
-int		main(void)
+char	lem_recoup_way(t_lem_env *e, t_way *way)
 {
-	t_lem_env	e;
+	int	i;
+	int j;
+	int k;
 
-	lem_init(&e);
-	lem_pre_calcul_way(&e);
-	lem_pre_launch_ants(&e);
-	lem_close(1, &e, "");
-	return (0);
+	if (way->n_noeuds < 1)
+		return (FAIL);
+	j = 0;
+	i = -1;
+	k = 0;
+	while (++i < e->n_ways)
+	{
+		if (!lem_recoup_way2(e->ways[i], way))
+		{
+			++j;
+			k = i;
+		}
+	}
+	if (j == 0)
+		return (-1);
+	if (j == 1 && ((way->n_noeuds < e->ways[k]->n_noeuds) ||
+			(way->n_noeuds == e->ways[k]->n_noeuds &&
+			way->size < e->ways[k]->size)))
+		return (k);
+	return (-2);
 }

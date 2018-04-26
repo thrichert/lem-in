@@ -6,7 +6,7 @@
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 14:29:39 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/05 13:56:12 by apopinea         ###   ########.fr       */
+/*   Updated: 2018/03/16 18:56:51 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ long int			ft_abs_ld(long int nb);
 float				ft_abs_f(float nb);
 double				ft_abs_lf(double nb);
 long double			ft_abs_llf(long double nb);
+int					ft_atoi_next_direct_np(char *str, int *i);
+int					ft_atoi_next2(char *str, int *i);
 
 /*
 **	ft_atoi	->	libft/nombre/ft_atoi.c

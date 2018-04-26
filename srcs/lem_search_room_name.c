@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_search_room_name.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:56:01 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 18:56:25 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+int		lem_search_room_name(t_lem_env *e, char *s)
 {
-	va_list		ap;
+	int	i;
 
-	if (fd > 0 && s)
+	i = 0;
+	while(i < e->n_rooms)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		if (ft_strcmp_np(s, e->rooms[i].name) == 0)
+			return (i);
+		++i;
 	}
+	return (-1);
 }

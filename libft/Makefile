@@ -6,7 +6,7 @@
 #    By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/04 11:05:55 by apopinea          #+#    #+#              #
-#    Updated: 2018/03/05 14:40:21 by apopinea         ###   ########.fr        #
+#    Updated: 2018/04/24 14:54:49 by apopinea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -164,7 +164,8 @@ DIR_H_MAIN = $(DIR_MAIN)includes/
 HEADER_MAIN =	lmain.h		\
 				p_lmain.h
 
-SRCS_MAIN = 	ft_getstr.c
+SRCS_MAIN = 	ft_getstr.c			\
+				gnl.c
 
 ############# matrix ##############
 DIR_MATRIX = $(DIR_SH_GENERAL)matrix/

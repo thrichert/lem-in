@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_calcul_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:47:53 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 18:48:05 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+int		lem_calcul_size(t_lem_env *e, int id1, int id2)
 {
-	va_list		ap;
+	int	a;
+	int	b;
 
-	if (fd > 0 && s)
-	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
-	}
+	a = e->rooms[id2].x - e->rooms[id1].x;
+	if (a < 0)
+		a = -a;
+	b = e->rooms[id2].y - e->rooms[id1].y;
+	if (b < 0)
+		return (a - b);
+	return (a + b);
 }

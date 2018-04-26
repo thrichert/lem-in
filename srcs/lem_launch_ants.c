@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_launch_ants.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 16:36:23 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 16:36:42 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+void	lem_launch_ants(t_lem_env *e)
 {
-	va_list		ap;
+	int i;
 
-	if (fd > 0 && s)
+	while (e->rooms[e->id_room_e].state < e->n_ants)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		i = 0;
+		while (i < e->n_ants)
+		{
+			if (e->ants[i].room != e->id_room_e)
+			{
+				if (e->ants[i].way == -1)
+					e->ants[i].way = lem_search_way(e);
+				if (e->ants[i].way != -1)
+					lem_move_ant(e, i);
+			}
+			++i;
+		}
+		e->n_s_ants = e->rooms[e->id_room_s].state;
+		ft_printf("\n");
 	}
 }

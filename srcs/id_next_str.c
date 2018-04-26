@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   id_next_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 19:12:57 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 19:14:28 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+int		id_next_str(char *s, int i)
 {
-	va_list		ap;
-
-	if (fd > 0 && s)
+	if (s[i] == '\0')
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		++i;
+		while (s[i] == '\0')
+			++i;
+		return (i);
 	}
+	++i;
+	while (s[i] != '\0')
+		++i;
+	++i;
+	while (s[i] == '\0')
+			++i;
+	return (i);
 }

@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_recoup_way2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 18:45:11 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 18:45:42 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+char	lem_recoup_way2(t_way *way1, t_way *way2)
 {
-	va_list		ap;
+	int	i;
+	int	j;
+	int k;
+	int l;
 
-	if (fd > 0 && s)
+	i = 1;
+	k = way1->n_noeuds - 1;
+	l = way2->n_noeuds - 1;
+	while (i < k)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		j = 1;
+		while (j < l)
+		{
+			if (way1->noeuds[i] == way2->noeuds[j])
+			{
+				return (FAIL);
+			}
+			++j;
+		}
+		++i;
 	}
+	return (SUCCESS);
 }

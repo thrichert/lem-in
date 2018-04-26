@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pprtl.c                                         :+:      :+:    :+:   */
+/*   lem_move_ant.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 15:33:31 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/24 19:34:07 by apopinea         ###   ########.fr       */
+/*   Created: 2018/04/26 16:43:28 by apopinea          #+#    #+#             */
+/*   Updated: 2018/04/26 16:43:42 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "p_lutil.h"
+# include "lemin.h"
 
-void	ft_pprtl(int fd, const char *s, ...)
+void	lem_move_ant(t_lem_env *e, int i)
 {
-	va_list		ap;
+	int	k;
+	int	j;
 
-	if (fd > 0 && s)
+	k = e->ways[e->ants[i].way]->noeuds[e->ants[i].id_noeud + 1];
+	j = e->ants[i].room;
+	if (e->rooms[k].state == 0 || k == e->id_room_e)
 	{
-		va_start(ap, s);
-		ft_prtl(s, &ap, fd);
-		va_end(ap);
+		e->rooms[j].state -= 1;
+		e->ants[i].room = k;
+		e->rooms[k].state += 1;
+		++(e->ants[i].id_noeud);
+		ft_printf("L%d-%s ", i, e->rooms[k].name);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 15:10:58 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/11 17:39:42 by trichert         ###   ########.fr       */
+/*   Updated: 2017/11/30 23:48:29 by Trichert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 **	ft_strchr	->	libft/string/ft_strchr.c
-**		recherche c dans s
-**		renvoie l'addresse de c dans s
+**		recherche c dans
+**		renvoie la addresse de c dans s
 */
 
 char	*ft_strchr(const char *s, char c)
@@ -41,7 +41,7 @@ int		ft_strchr_i(char *s, char c)
 	int i;
 
 	if (!s)
-		return (-1);
+		return (FAIL);
 	i = 0;
 	while (s[i])
 	{
@@ -51,7 +51,7 @@ int		ft_strchr_i(char *s, char c)
 	}
 	if (s[i] == c)
 		return (i);
-	return (-1);
+	return (FAIL);
 }
 
 /*
@@ -65,7 +65,7 @@ int		ft_strchr_i_back(char *s, char c)
 	int i;
 
 	if (!s)
-		return (-1);
+		return (FAIL);
 	i = ft_strlen_np(s) - 1;
 	while (s[i])
 	{
@@ -75,5 +75,5 @@ int		ft_strchr_i_back(char *s, char c)
 	}
 	if (s[i] == c)
 		return (i);
-	return (-1);
+	return (FAIL);
 }

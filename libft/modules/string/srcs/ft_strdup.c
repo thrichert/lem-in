@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trichert <trichert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:30:13 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/08 19:44:33 by trichert         ###   ########.fr       */
+/*   Updated: 2018/03/25 14:57:44 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "p_str.h"
+
+char		*ft_strdup_p(const char *s1)
+{
+	char	*s2;
+	int		count;
+	int		i;
+
+	if (!s1)
+		return (NULL);
+	count = 0;
+	while (s1[count])
+		++count;
+	if (!(s2 = (char*)malloc(sizeof(char) * (count + 1))))
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		s2[i] = s1[i];
+		++i;
+	}
+	s2[count] = '\0';
+	return (s2);
+}
 
 /*
 **	ft_strdup	->	libft/string/ft_strdup.c

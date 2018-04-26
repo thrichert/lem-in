@@ -6,7 +6,7 @@
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 15:00:10 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/05 14:23:42 by apopinea         ###   ########.fr       */
+/*   Updated: 2018/04/25 12:34:10 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				ft_str_end_cmp_np(char *s1, char *s2);
 char				*ft_strjoin_np(char *s1, char *s2);
+char				*ft_strdup_p(const char *s1);
+int					ft_strsplit_buf2(char *s, char c);
 
 /*
 **	ft_itoa	->	libft/string/ft_itoa.c

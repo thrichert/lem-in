@@ -6,7 +6,7 @@
 /*   By: apopinea <apopinea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 14:17:20 by apopinea          #+#    #+#             */
-/*   Updated: 2018/03/05 13:53:34 by apopinea         ###   ########.fr       */
+/*   Updated: 2018/04/24 14:01:54 by apopinea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@
 **		lit une chaine sur l'entree standar
 */
 char		*ft_getstr(int size);
+
+int			gnll(int fd, char **line);
 
 #endif
